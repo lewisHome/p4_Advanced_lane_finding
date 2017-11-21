@@ -1,8 +1,28 @@
-## Writeup Template
+# Udacity Self Driving Car Nanodegree - Project 4
+## Advanced lane finding
 
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+The aim of this project is to build upon the work carried out for [project 1](https://github.com/lewisHome/p1_LaneLines) and develop an image processing pipeline to identify lane markings. However in contrast to the pipeline developed in project 1 this pipeline must be able to measure the radius of curvature of any corners and calculate the position of the car with respect to the centre of its lane.
 
----
+Further to the video files provided in the [Udacity project repository](https://github.com/udacity/CarND-Advanced-Lane-Lines) I decided to collect my own video files too. My repository includes some urban and rural driving collected around Melbourne as well as some rural driving collected from the Highlands of Scotland. I decided to collect this extra data because eventually autonomous cars will have to be able to navigate roads of varying quality, by testing my pipeline on these varying conditions it highlights to me just how insufficient my code is.
+
+The videos collected for this project have been collected by different cameras from around the world so I developed some modules to allow easy analysis of the data.
+
+### Camera Callibration
+The program [Camera_Callibration.py](camera_callibration.py) is a utility to callibrate the camera used to collect the video data. The method is b based on the method detailed in the [OpenCV Documentation](http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_calib3d/py_calibration/py_calibration.html). To use the utility call the function from the command line
+    
+    $ python Camera_Callibration.py -camera_images -show_images -nx -ny
+
+where;
+-camera_images is the file containing the callibration images
+-show_images is a flag to view the callibration images as they are being processed
+-nx is the number of internal corners horizontally across the callibration image
+-ny is the number of internal corners vertically across the callibration image
+
+This utility outputs 4 .npy files which hold the callibration constants for to remove the inherant distortion from the camera images and are written to the file containing the callibration photos.
+
+### Perspective Finder Utility
+I have built a utility to find the values for perspective transformation. The utility
+
 
 **Advanced Lane Finding Project**
 
