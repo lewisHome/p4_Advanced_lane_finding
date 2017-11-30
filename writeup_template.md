@@ -8,19 +8,38 @@ Further to the video files provided in the [Udacity project repository](https://
 The videos collected for this project have been collected by different cameras from around the world so I developed some modules to allow easy analysis of the data.
 
 ### Camera Callibration
-The program [Camera_Callibration.py](camera_callibration.py) is a utility to callibrate the camera used to collect the video data. The method is based on the method detailed in the [OpenCV Documentation](http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_calib3d/py_calibration/py_calibration.html). To use the utility call the function from the command line
+The program [Camera_Callibration.py](camera_callibration.py) is a utility to callibrate the camera used to collect the video data. The method is b based on the method detailed in the [OpenCV Documentation](http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_calib3d/py_calibration/py_calibration.html). To use the utility call the function from the command line
     
     $ python Camera_Callibration.py -camera_images -show_images -nx -ny
 
+
 where;
+
 -camera_images is the file containing the callibration images
+
 -show_images is a flag to view the callibration images as they are being processed
+
 -nx is the number of internal corners horizontally across the callibration image
+
 -ny is the number of internal corners vertically across the callibration image
 
-This utility outputs 4 .npy files which hold the callibration constants for to remove the inherant distortion from the camera images.
+This utility outputs 4 .npy files which hold the callibration constants for to remove the inherant distortion from the camera images and are written to the file containing the callibration photos.
 
-##
+### Lane Finding
+
+
+### Perspective Finder Utility
+I have built a utility to find the values for perspective transformation. To run the utility press 'c' to callibrate.
+
+[Perspective Finder](/examples/Perspective_Finder.JPG)
+
+Adjust the sliders above the images to adjust the perspective transformation. Once you are happy press 's' to save the the perspective transformation. Saving the trasnformation will overwrite any existing transformation associated with the video, press 'q' to quit without saving.
+
+
+
+
+
+
 
 **Advanced Lane Finding Project**
 
