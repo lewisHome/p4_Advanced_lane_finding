@@ -38,16 +38,27 @@ Here;
 
 -output_file is the file path where you would like to store all processed data. This defaults to the 'output_images'
 
+On startup if this is the first time the video has been run you will be prompted to run the perspective finder utility.
 
-
-
-
-### Perspective Finder Utility
-I have built a utility to find the values for perspective transformation. To run the utility press 'c' to callibrate.
+#### Perspective Finder Utility
+I built the perspective finder so that I could easily modify the perspective transform for different videos. To run the utility press 'c' to callibrate while running lane_finder.py. It is best to run this routine on a straight piece of road if possible
 
 ![Perspective Finder](examples/Perspective_Finder.JPG)
 
 Adjust the sliders above the images to adjust the perspective transformation. Once you are happy press 's' to save the the perspective transformation. Saving the trasnformation will overwrite any existing transformation associated with the video so press 'q' if you wish to quit without saving.
+
+#### Lane Finding Method
+
+To find the lanes in the video images I take the following approach.
+
+1.) Convert the colour image in to the HLS colour space and split the image into 3 black and white images for each colour channel. The reason I did this is because under different lighting conditions different channels do a better job of highlighting lane lines.
+
+Good Lighting | Bad Lighting
+--------------|-------------
+![GoodLight](examples/Good_light.jpg)|![Shadows](examples/shadows.jpg)
+
+As the above images show in good light the lane lines appera very sharply in the S and L channels however under bad lighting conditions the lanes appear more clearly in the H Channel.
+
 
 
 
