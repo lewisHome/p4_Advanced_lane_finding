@@ -61,7 +61,7 @@ As the above images show in good light the lane lines appera very sharply in the
 
 2.) The next step is to find determine what is and what is not a lane in the video files. To do this I first detect edges using a canny edge detection method on the standard input images. Next I perform a perspective transform to provide a top down view of the image. On the transformed image I then use a sobel operator to find image gradients.
 
-[Edges](examples/Edges.jpg)
+![Edges](examples/Edges.jpg)
 
 
 
