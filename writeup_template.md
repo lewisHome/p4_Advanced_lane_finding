@@ -26,6 +26,20 @@ where;
 This utility outputs 4 .npy files which hold the callibration constants for to remove the inherant distortion from the camera images and are written to the file containing the callibration photos.
 
 ### Lane Finding
+The program [lane_finder.py](lane_finder.py) can be run from the command line.
+
+    $python lane_finder.py -camera_data -test_data -output_file
+    
+Here;
+
+-test_data is the video file you wish to process
+
+-camera data should be the file containing the callibration data obtained by running the camera callibration utlilty described earlier. The program uses the Udacity Camera as default.
+
+-output_file is the file path where you would like to store all processed data. This defaults to the 'output_images'
+
+
+
 
 
 ### Perspective Finder Utility
@@ -33,7 +47,7 @@ I have built a utility to find the values for perspective transformation. To run
 
 ![Perspective Finder](examples/Perspective_Finder.JPG)
 
-Adjust the sliders above the images to adjust the perspective transformation. Once you are happy press 's' to save the the perspective transformation. Saving the trasnformation will overwrite any existing transformation associated with the video, press 'q' to quit without saving.
+Adjust the sliders above the images to adjust the perspective transformation. Once you are happy press 's' to save the the perspective transformation. Saving the trasnformation will overwrite any existing transformation associated with the video so press 'q' if you wish to quit without saving.
 
 
 
