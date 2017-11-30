@@ -55,7 +55,7 @@ To find the lanes in the video images I take the following approach.
 
 Good Lighting | Bad Lighting
 --------------|-------------
-![GoodLight](examples/Good_light.jpg)|![Shadows](examples/shadows.jpg)
+![GoodLight](examples/Good_light.jpg)|![Shadows](examples/Shadows.jpg)
 
 As the above images show in good light the lane lines appera very sharply in the S and L channels however under bad lighting conditions the lanes appear more clearly in the H Channel.
 
