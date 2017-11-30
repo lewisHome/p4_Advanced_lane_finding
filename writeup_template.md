@@ -31,7 +31,7 @@ This utility outputs 4 .npy files which hold the callibration constants for to r
 ### Perspective Finder Utility
 I have built a utility to find the values for perspective transformation. To run the utility press 'c' to callibrate.
 
-[Perspective Finder]:/examples/Perspective_Finder.JPG
+[Perspective Finder]: /examples/Perspective_Finder.JPG
 
 Adjust the sliders above the images to adjust the perspective transformation. Once you are happy press 's' to save the the perspective transformation. Saving the trasnformation will overwrite any existing transformation associated with the video, press 'q' to quit without saving.
 
