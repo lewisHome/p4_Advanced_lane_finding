@@ -8,65 +8,19 @@ Further to the video files provided in the [Udacity project repository](https://
 The videos collected for this project have been collected by different cameras from around the world so I developed some modules to allow easy analysis of the data.
 
 ### Camera Callibration
-The program [Camera_Callibration.py](camera_callibration.py) is a utility to callibrate the camera used to collect the video data. The method is b based on the method detailed in the [OpenCV Documentation](http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_calib3d/py_calibration/py_calibration.html). To use the utility call the function from the command line
+The program [Camera_Callibration.py](camera_callibration.py) is a utility to callibrate the camera used to collect the video data. The method is based on the method detailed in the [OpenCV Documentation](http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_calib3d/py_calibration/py_calibration.html). To use the utility call the function from the command line
     
     $ python Camera_Callibration.py -camera_images -show_images -nx -ny
 
-
 where;
-
 -camera_images is the file containing the callibration images
-
 -show_images is a flag to view the callibration images as they are being processed
-
 -nx is the number of internal corners horizontally across the callibration image
-
 -ny is the number of internal corners vertically across the callibration image
 
-This utility outputs 4 .npy files which hold the callibration constants for to remove the inherant distortion from the camera images and are written to the file containing the callibration photos.
+This utility outputs 4 .npy files which hold the callibration constants for to remove the inherant distortion from the camera images.
 
-### Lane Finding
-The program [lane_finder.py](lane_finder.py) can be run from the command line.
-
-    $python lane_finder.py -camera_data -test_data -output_file
-    
-Here;
-
--test_data is the video file you wish to process
-
--camera data should be the file containing the callibration data obtained by running the camera callibration utlilty described earlier. The program uses the Udacity Camera as default.
-
--output_file is the file path where you would like to store all processed data. This defaults to the 'output_images'
-
-On startup if this is the first time the video has been run you will be prompted to run the perspective finder utility.
-
-#### Perspective Finder Utility
-I built the perspective finder so that I could easily modify the perspective transform for different videos. To run the utility press 'c' to callibrate while running lane_finder.py. It is best to run this routine on a straight piece of road if possible
-
-![Perspective Finder](examples/Perspective_Finder.JPG)
-
-Adjust the sliders above the images to adjust the perspective transformation. Once you are happy press 's' to save the the perspective transformation. Saving the trasnformation will overwrite any existing transformation associated with the video so press 'q' if you wish to quit without saving.
-
-#### Lane Finding Method
-
-To find the lanes in the video images I take the following approach.
-
-1.) Convert the colour image in to the HLS colour space and split the image into 3 black and white images for each colour channel. The reason I did this is because under different lighting conditions different channels do a better job of highlighting lane lines.
-
-Good Lighting | Bad Lighting
---------------|-------------
-![GoodLight](examples/Good_light.jpg)|![Shadows](examples/Shadows.jpg)
-
-As the above images show in good light the lane lines appera very sharply in the S and L channels however under bad lighting conditions the lanes appear more clearly in the H Channel.
-
-2.) The next step is to find determine what is and what is not a lane in the video files. To do this I first detect edges using a canny edge detection method on the standard input images. Next I perform a perspective transform to provide a top down view of the image. On the transformed image I then use a sobel operator to find image gradients.
-
-![Edges](examples/Edges.jpg)
-
-
-
-
-
+##
 
 **Advanced Lane Finding Project**
 
