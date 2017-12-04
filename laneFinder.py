@@ -7,7 +7,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from LFutils import perspectiveFinder, Line
 import time
-from moviepy.editor import VideoFileClip
 
 #This function loads camera constants from camera_callibration.py output files
 def loadCameraConstants(camera_data):
@@ -21,7 +20,6 @@ def loadCameraConstants(camera_data):
 
 #This function loads any predefined perspective distortion constants
 def loadPerspectiveConstants(filePath):
-    
     try:
         filePath = ((filePath.rstrip('.mp4')).rstrip('.jpg'))
         M = np.load(filePath + '_M.npy')
@@ -55,6 +53,14 @@ def threshFrame(image):
     Smask = cv2.Canny(Smask,100,200)
     #return masked images
     return Hmask, Lmask, Smask 
+
+#This function performs a perspective transform on an image to get a top down view
+def perspectiveTransform(image, M, PDims):
+    warp = cv2.warpPerspective( image, \
+                                M, \
+                                (PDims[0],PDims[1]), \
+                                flags=cv2.INTER_LINEAR)
+    return  warp
 
 #this function has been ripped from Udacity course notes it draws a sliding window mask onto a blank image
 def window_mask(width, height, img_ref, center,level):
@@ -169,6 +175,7 @@ def findCurvature(image):
         conf=0
     return curverad,intersect, fit, conf
 
+#This function applys a msak around the region where the lane was found in the preceding image
 def quickMask(image, fit, lane):
     yList=np.linspace(0,image.shape[0], num=10, endpoint=True,dtype=np.float32)
     fitx = fit[0]*yList**2 + fit[1]*yList + fit[2]
@@ -192,6 +199,7 @@ def quickMask(image, fit, lane):
     mask = cv2.bitwise_and(image,confMaskLine)
     return mask
 
+#This function determines how confident we can be in the lane line found
 def confidence(image, fit, lane):
     if fit == None:
         conf=0
@@ -223,8 +231,9 @@ def confidence(image, fit, lane):
         conf = np.divide((np.sum(confImgIn)+1),np.sum(confImgOut))
     return conf
 
+#This function finds the lane lines in the image
 def findLanes(image):
-    if lineData.lineFound in (0,2,3,4):
+    if lineData.lineFound == 0:
         leftLane, rightLane =find_window_centroids(image)
     else:
         leftLane = quickMask(image,lineData.leftPoly, 'left')
@@ -235,25 +244,6 @@ def findLanes(image):
     rightConf = confidence(image, rightFit, 'right')
     return [leftConf, leftCurveRad, leftFit[0], leftFit[1], leftFit[2], rightConf, rightCurveRad, rightFit[0], rightFit[1], rightFit[2]]
 
-def maskPerspective(image, M, PDims):
-    warp = cv2.warpPerspective( image, \
-                                M, \
-                                (PDims[0],PDims[1]), \
-                                flags=cv2.INTER_LINEAR)
-   
-    if (lineData.leftPoly == None) or (lineData.rightPoly == None):
-        pass
-    else:
-        yList=np.linspace(0,image.shape[0], num=10, endpoint=True,dtype=np.float32)
-
-        fitx = lineData.leftPoly[0]*yList**2 + lineData.leftPoly[1]*yList + lineData.leftPoly[2]
-        fitx = np.asarray(fitx,dtype=np.uint16)
-        points=np.asarray(np.vstack((fitx, yList)).T,dtype=np.uint16)
-            
-        fitx = lineData.rightPoly[0]*yList**2 + lineData.rightPoly[1]*yList + lineData.rightPoly[2]
-        fitx = np.asarray(fitx,dtype=np.uint16)
-        points=np.asarray(np.vstack((fitx, yList)).T,dtype=np.uint16)
-    return  warp
 
 #This function chooses which channel has found the best lane line
 def chooseLine(calcLaneParameters):
@@ -271,7 +261,6 @@ def chooseLine(calcLaneParameters):
     else:
         rcChoose=rightChannelSort[1]
  
-    #print ("right conf = ",calcLaneParameters[rcChoose,6])
     if calcLaneParameters[lcChoose,0] > 5:
         lineData.leftPoly=calcLaneParameters[lcChoose,2:5]
         lineData.leftInt = calcLaneParameters[lcChoose,4]
@@ -296,7 +285,6 @@ def chooseLine(calcLaneParameters):
         lineData.lineFound = 3
     else:
         lineData.lineFound = 4
-    print ("LineData",lineData.lineFound)
     return lcChoose, rcChoose
 
 def videoProcess(img):
@@ -322,11 +310,11 @@ def videoProcess(img):
         runAnalysis = False
         
     else:
-        HPerspective = maskPerspective(Hmask, M, PDims)
+        HPerspective = perspectiveTransform(Hmask, M, PDims)
         
-        LPerspective = maskPerspective(Lmask, M, PDims)
+        LPerspective = perspectiveTransform(Lmask, M, PDims)
         
-        SPerspective = maskPerspective(Smask, M, PDims)
+        SPerspective = perspectiveTransform(Smask, M, PDims)
         
         runAnalysis = True
 
@@ -339,8 +327,7 @@ def videoProcess(img):
         calcLaneParameters=np.vstack((calcLaneParameters,findLanes(SPerspective)))
         lineData.params = calcLaneParameters
         leftChannel, rightChannel = chooseLine(calcLaneParameters)
-        print("Left poly: ",lineData.leftPoly)
-        print("Right poly: ",lineData.rightPoly)
+
         if lineData.lineFound == 1:
             warpMask=np.zeros_like(HPerspective)
             yListl = np.linspace(0,warpMask.shape[0], num=10, endpoint=True,dtype=np.float32)
@@ -476,7 +463,7 @@ if __name__ == '__main__':
         cv2.imshow("Image",displayImg)
         # Define the codec and create VideoWriter object
         if setUpOutput == False:
-            fourcc = cv2.VideoWriter_fourcc(*'XVID')
+            fourcc = cv2.VideoWriter_fourcc(*'DIVX')
             videoOut = args.output_file+args.test_data
             print("Saving processed video to: ", videoOut)
             imageName = args.output_file+args.test_data.rstrip('mp4')+'jpg'
