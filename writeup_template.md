@@ -47,11 +47,13 @@ I built the perspective finder so that I could easily modify the perspective tra
 
 Adjust the sliders above the images to adjust the perspective transformation. Once you are happy press 's' to save the the perspective transformation. Saving the trasnformation will overwrite any existing transformation associated with the video so press 'q' if you wish to quit without saving.
 
-#### Lane Finding Method
+#### Lane Finding Pipe Line
 
 Upon setting up the perspective transfom constants you can run the analysis. To find the lanes in the video images I take the following approach.
 
-1.) Convert the colour image in to the HLS colour space and split the image into 3 black and white images for each colour space channel. The reason I did this is because under different lighting conditions different channels do a better job of highlighting lane lines.
+1.) Images are loaded from the video and camera distortions are removed using the undistort function on lines 36 -37.
+
+2.) Convert the colour image in to the HLS colour space and split the image into 3 black and white images for each colour space channel. The reason I did this is because under different lighting conditions different channels do a better job of highlighting lane lines. I then find edges using a Canny edge finder. This is all carried out in the thresh frame function on lines 40 - 55
 
 Good Lighting | Bad Lighting
 --------------|-------------
@@ -59,7 +61,7 @@ Good Lighting | Bad Lighting
 
 As the above images show in good light the lane lines appera very sharply in the S and L channels however under bad lighting conditions the lanes appear more clearly in the H Channel.
 
-2.) The next step is to find lines in the image. To do this I first detect edges using a canny edge detection method on the H, L, and S input images. Next I perform a perspective transform to provide a top down view of each image.
+3.) The next step is to perform a perspective transform to provide a top down view of each image. THis is carried out using the perspectiveTransform function on lines 58 - 63.
 
 ![Edges](examples/Edges.jpg)
 
@@ -69,7 +71,7 @@ As the above images show in good light the lane lines appera very sharply in the
 
 5.) Upon determining what the most appropriate lane lines are the algorithm calculates the radius of curvature and the position of the car with respect to the centre of the road.
 
-6.)Finally the images are assembled for display with appropriate markings indicated.
+6.)Finally the images are assembled for display with appropriate markings and values indicated.
 
 ## Project Video
 
@@ -79,13 +81,13 @@ Click the image to view the results of the video processing pipeline on the proj
 
 ## Challenge Video
 
-Click the image to view the results of the video processing pipeline on the challenge video. The pipeline performs very poorly and at no point does it even find the lanes to start working properly. This is becuase there is a lot of noise in the edge images. This could be improved by using a better thresholding technique, potentially applying a thresholding technique to the H,L and S images and then thresholding Sobel gradients after performing the perspective transform.
+Click the image to view the results of the video processing pipeline on the challenge video. The pipeline performs very poorly and at no point does it even find the lanes to start working properly. This is becuase there is a lot of noise in the edge images. This could be improved by using a better thresholding technique, potentially applying a thresholding technique to the H,L and S images before using the canny edge function and then thresholding Sobel gradients after performing the perspective transform.
 
 [![Challenge Video](output_images/challenge_video.jpg)](https://www.youtube.com/watch?v=Kfc_afGTuBE)
 
 ## Harder Challenge Video
 
-The pipeline performs better on the harder challenge video than the challenge video. The lanes are intially found in the H channel as opposed the L and S channels where they were found in the first video. However the pipeline eventually looses the lane lines at a series of tight corners, potentially fitting a higher order polynomial to the lane lines could over come this problem.
+The pipeline performs better on the harder challenge video than the challenge video. The lanes are intially found in the H and L channel as opposed the L and S channels where they were found in the project video. However the pipeline eventually looses the lane lines at a series of tight corners, potentially fitting a higher order polynomial to the lane lines could over come this problem.
 
 [![Harder Challenge Video](output_images/harder_challenge_video.jpg)](https://www.youtube.com/watch?v=FbZ0O_X-SCg)
 
