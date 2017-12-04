@@ -65,9 +65,9 @@ As the above images show in good light the lane lines appera very sharply in the
 
 ![Edges](examples/Edges.jpg)
 
-3.)Edges are initially found using the sliding windows lane finder as described in the Udacity course notes. Once the lanes are found a polynomial mask is placed over the image around the region where the last lane was found
+3.)The next stpe is to find the lanes. This is carried out using the findLanes function o n lines 234 - 244. Initially the lanes are found using the sliding window technique described in the Udacity course notes. With the function find_window_centroids on lines 72 - 128. However once the lanes are found a mask is placed around the region where the lane was found in the previous image using the quickMask function - lines 179 - 200. the properties of the lane line are found with the function findCurvature on lines 150 - 176. And a confidence is found for the found line using the confidence function lines 203 - 232.
 
-4.)After attempting to find a lane line a score is placed against the quality of the lane found. The best lane line is then recorded in the Line class found in LFUtils. If no lane is found wiht a suitably high score then the lane data is not updated, this is highlighted in the videos by highlighting the channels red.
+4.) Then a lane is chosen using the chooseLine function lines 249 -288. The best lane line is then recorded in the Line class found in LFUtils. If no lane is found wiht a suitably high score then the lane data is not updated, this is highlighted in the videos by highlighting the channels red.
 
 5.) Upon determining what the most appropriate lane lines are the algorithm calculates the radius of curvature and the position of the car with respect to the centre of the road.
 
