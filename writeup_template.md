@@ -23,6 +23,12 @@ where;
 
 This utility outputs 4 .npy files which hold the callibration constants for to remove the inherant distortion from the camera images and are written to the file containing the callibration photos.
 
+Here is an example of removing the distortion from a chess board image.
+
+Origional Chess Board|Undistorted Chess Board
+---------------|-----------------
+![origImg](examples/origChess.jpg)|![undistImg](examples/undistChess.jpg)
+
 ### Lane Finding
 The program [lane_finder.py](lane_finder.py) can be run from the command line.
 
@@ -52,6 +58,10 @@ Adjust the sliders above the images to adjust the perspective transformation. On
 Upon setting up the perspective transfom constants you can run the analysis. To find the lanes in the video images I take the following approach.
 
 1.) Images are loaded from the video and camera distortions are removed using the undistort function on lines 36 -37.
+
+Origional Image|Undistorted Image
+---------------|-----------------
+![origImg](examples/origImg.jpg)|![undistImg](examples/undistImg.jpg)
 
 2.) Convert the colour image in to the HLS colour space and split the image into 3 black and white images for each colour space channel. The reason I did this is because under different lighting conditions different channels do a better job of highlighting lane lines. I then find edges using a Canny edge finder. This is all carried out in the thresh frame function on lines 40 - 55
 
