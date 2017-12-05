@@ -30,9 +30,9 @@ Origional Chess Board|Undistorted Chess Board
 ![origImg](examples/origChess.jpg)|![undistImg](examples/undistChess.jpg)
 
 ### Lane Finding
-The program [lane_finder.py](lane_finder.py) can be run from the command line.
+The program [lanefinder.py](lanefinder.py) can be run from the command line.
 
-    $python lane_finder.py -camera_data -test_data -output_file -record
+    $python lane_finder.py -camera_data -test_data -output_file
     
 Here;
 
@@ -41,8 +41,6 @@ Here;
 -camera data should be the file containing the callibration data obtained by running the camera callibration utlilty described earlier. The program uses the Udacity Camera as default.
 
 -output_file is the file path where you would like to store all processed data. This defaults to the 'output_images'
-
--record set to 'True' if you would like to record the video. If you do not record the video you have the option to run the perspective finder utility by pressing 'c', puasing the video and saving a snapshot by pressing 'p' and quiting the video early by pressing 'q'.
 
 On startup if this is the first time the video has been run you will be prompted to run the perspective finder utility.
 
@@ -69,7 +67,7 @@ Good Lighting | Bad Lighting
 --------------|-------------
 ![GoodLight](examples/Good_light.jpg)|![Shadows](examples/Shadows.jpg)
 
-As the above images show in good light the lane lines appera very sharply in the S and L channels however under bad lighting conditions the lanes appear more clearly in the H Channel.
+As the above images show in good light the lane lines appear very sharply in the S and L channels however under bad lighting conditions the lanes appear more clearly in the H Channel.
 
 3.) The next step is to perform a perspective transform to provide a top down view of each image. THis is carried out using the perspectiveTransform function on lines 58 - 63.
 
@@ -87,7 +85,7 @@ As the above images show in good light the lane lines appera very sharply in the
 
 Click the image to view the results of the video processing pipeline on the project video. The pipeline performs quite well, occasionally it doesn't find a suitable lane but it gets away with it by using the last lane line found.
 
-[![Project Video](output_images/project_video.jpg)](https://www.youtube.com/watch?v=n6irnJj9HbU)
+[![Project Video](output_images/project_video.jpg)](https://youtu.be/3W_rA2Q0doM)
 
 ## Challenge Video
 
