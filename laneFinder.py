@@ -349,7 +349,7 @@ def videoProcess(img):
             radOfCurvature = 'Radius of curvature is {:}m'.format(int(lineData.leftCurve))
             img = cv2.putText(img,radOfCurvature,(50,50), cv2.FONT_HERSHEY_SIMPLEX, 2,(0,0,0),2,cv2.LINE_AA)
 
-            centreLine = abs(warpMask.shape[1] - ((lineData.rightInt-lineData.leftInt)/2))*(3.7/7000)
+            centreLine = abs((warpMask.shape[1]/2) - ((lineData.rightPoly[2]+lineData.leftPoly[2])/2))*(3.7/700)
 
             if centreLine < Mask.shape[1]:
                 centreLineText = 'Vehicle is {:.2f}m left of centre'.format(centreLine)
