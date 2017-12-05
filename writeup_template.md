@@ -30,7 +30,7 @@ Origional Chess Board|Undistorted Chess Board
 ![origImg](examples/origChess.jpg)|![undistImg](examples/undistChess.jpg)
 
 ### Lane Finding
-The program [lanefinder.py](lanefinder.py) can be run from the command line.
+The program [laneFinder.py](laneFinder.py) can be run from the command line.
 
     $python lane_finder.py -camera_data -test_data -output_file
     
