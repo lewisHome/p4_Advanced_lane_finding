@@ -328,7 +328,7 @@ def videoProcess(img):
         lineData.params = calcLaneParameters
         leftChannel, rightChannel = chooseLine(calcLaneParameters)
 
-        if lineData.lineFound == 1:
+        if lineData.lineFound > 0:
             warpMask=np.zeros_like(HPerspective)
             yListl = np.linspace(0,warpMask.shape[0], num=10, endpoint=True,dtype=np.float32)
             fitxl = lineData.leftPoly[0]*yListl**2 + lineData.leftPoly[1]*yListl + lineData.leftPoly[2]
