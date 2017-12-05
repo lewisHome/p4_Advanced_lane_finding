@@ -15,7 +15,7 @@ def loadCameraConstants(camera_data):
         dist = np.load(camera_data + "\\dist.npy")
         return mtx, dist
     except IOError:
-        print("Camera callibration data not avaliable - please run Camera_callibration.py")
+        print("Camera callibration data not avaliable - please run Camera_Callibration.py")
         exit
 
 #This function loads any predefined perspective distortion constants
@@ -428,6 +428,8 @@ if __name__ == '__main__':
     parser.add_argument(
         '-test_data',
         type = str,
+        nargs = '?',
+        default = 'project_video.mp4',
         help = 'Image or video for processing'
         )
     parser.add_argument(
