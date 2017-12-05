@@ -6,7 +6,7 @@ The aim of this project is to build upon the work carried out for [project 1](ht
 Further to the video files provided in the [Udacity project repository](https://github.com/udacity/CarND-Advanced-Lane-Lines) I decided to collect my own video files too. So I developed some tools to easily allow different cameras to be used. Unfortunatly more work is needed on these tools so I have not included the files in this repository.
 
 ### Camera Callibration
-The program [Camera_Callibration.py](camera_callibration.py) is a utility to callibrate the camera used to collect the video data. The method is b based on the method detailed in the [OpenCV Documentation](http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_calib3d/py_calibration/py_calibration.html). To use the utility call the function from the command line
+The program [Camera_Callibration.py](Camera_Callibration.py) is a utility to callibrate the camera used to collect the video data. The method is b based on the method detailed in the [OpenCV Documentation](http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_calib3d/py_calibration/py_calibration.html). To use the utility call the function from the command line
     
     $ python Camera_Callibration.py -camera_images -show_images -nx -ny
 
